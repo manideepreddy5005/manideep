@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: skyblue;
+            padding: 0 10px 0 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+        }
+
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"] {
+            width: 80%;
+            padding: 10px;
+            margin-top: 5px;
+            border:  solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group input[type="checkbox"] {
+            margin-top: 5px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #popup {
+            display: none;
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px #000;
+        }
+    </style>
+</head>
+<body>
+    <form id="survey-form" autocomplete="off">
+        <h2 align="center" style="font-family:tohoma;">Customer Survey Form</h2>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" required>
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="date-of-birth">Date of Birth</label>
+            <input type="date" id="date-of-birth" required>
+        </div>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <select id="country" required>
+                <option value="">Select a country</option>
+                <option value="India">India</option>
+                <option value="SriLanka">SriLanka</option>
+                <option value="Japan">Japan</option>
+                <option value="usa">United States</option>
+                <option value="canada">Canada</option>
+                <option value="UK">UK</option>
+            </select>
+        </div>
+        <div class="form-group" >
+            
+            <label >Gender</label>
+            <input type="checkbox" name="gender" value="Male" > Male
+            <input type="checkbox" name="gender" value="Female" > Female
+            <input type="checkbox" name="gender" value="Others" > Others
+        </div>
+        <div class="form-group">
+            <label for="profession">Profession</label>
+            <input type="text" id="profession" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="mobile">Mobile Number</label>
+            <input type="tel" pattern="[0-9]{10}" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" id="submit">Submit</button>
+            <button type="button" id="reset">Reset</button>           
+        </div>
+    </form>
+
+    <div id="popup">
+        <div class="popup-content" id="popup-content">
+            Form has been successfully submitted
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("survey-form");
+        const popup = document.getElementById("popup");
+        const submitButton = document.getElementById("submit");
+        const resetButton = document.getElementById("reset");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Validation logic
+            const genderCheckboxes = document.querySelectorAll('input[type="checkbox"][name="gender"]');
+            const selectedGenders = Array.from(genderCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
+
+            if (selectedGenders.length === 0) {
+                alert("Please select the gender.");
+                return;
+            }
+
+            
+            popup.style.display = "flex";
+        });
+
+        resetButton.addEventListener("click", function () {
+            form.reset();
+        });
+
+        popup.addEventListener("click", function (e) {
+            if (e.target === popup) {
+                popup.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
